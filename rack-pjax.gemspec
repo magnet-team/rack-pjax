@@ -18,10 +18,13 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency('rack', '~> 1.1')
+  s.add_dependency('rack', '~> 1.6')
+
   if RUBY_VERSION < "1.9.2"
     s.add_dependency('nokogiri', '~> 1.5', '< 1.5.11')
-  else
+  elsif RUBY_VERSION > "1.9.2" && RUBY_VERSION < "2.1.2"
     s.add_dependency('nokogiri', '~> 1.5')
+  else
+    s.add_dependency('nokogiri', '~> 1.6')
   end
 end
