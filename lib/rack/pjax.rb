@@ -16,9 +16,10 @@ module Rack
 
       new_body = ""
       body.each do |b|
-        b.force_encoding('UTF-8') if RUBY_VERSION > '1.9.0'
+        str = String.new(b)
+        str.force_encoding('UTF-8') if RUBY_VERSION > '1.9.0'
 
-        parsed_body = Nokogiri::HTML(b)
+        parsed_body = Nokogiri::HTML(str)
         container = parsed_body.at(container_selector(env))
 
         new_body << begin
@@ -27,7 +28,7 @@ module Rack
 
             "%s%s" % [title, container.inner_html]
           else
-            b
+            str
           end
         end
       end
